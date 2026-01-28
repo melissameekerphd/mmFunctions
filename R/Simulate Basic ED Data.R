@@ -21,8 +21,9 @@ simulate_ed_dataset <- function(n_encounters = 10000, n_patients = 8500, seed = 
   # Patient Data
   unique_pat_ids <- sprintf("P%07d", seq_len(n_patients))
 
-  age = round(rnorm(n = n_patients, mean = 48, sd = 12))
-  age = ifelse(age<0, 0, ifelse(age>100, 100, age))
+  age = round(rnorm(n = n_patients, mean = 48, sd = 20))
+  age[which(age<=0)] = runif(n = length(age[which(age<=0)]), min = 1, max = 17)
+  age[which(age>=100)] = runif(n = length(age[which(age>=100)]), min = 65, max = 99)
   sex = sample(c("Female", "Male"), size = n_patients, replace = TRUE)
   language = sample(c("English", "Non-English"), size = n_patients, replace = TRUE)
 
@@ -37,12 +38,14 @@ simulate_ed_dataset <- function(n_encounters = 10000, n_patients = 8500, seed = 
 
   # ESI:
   encounter_data$esi_prob = rnorm(n = n_encounters, mean = 0.5, sd = 0.1) -
-                            0.05 * (encounter_data$age>=18) -
-                            0.1 * (encounter_data$age>=65) +
-                            0.1 * (encounter_data$sex=="Female") +
-                            0.1 * (encounter_data$language=="Non-English")
+                            0.050 * (encounter_data$age>=18) -
+                            0.100 * (encounter_data$age>=65) +
+                            0.025 * (encounter_data$sex=="Female") +
+                            0.050 * (encounter_data$language=="Non-English")
 
-  esi_cutoffs = quantile(encounter_data$esi_prob, probs = c(0.1, 0.4, 0.7, 0.85))
+  esi_quantile_noise = rnorm(n = 4, mean = 0, sd = 0.05)
+  esi_quantiles = c(0.1, 0.4, 0.7, 0.85) + esi_quantile_noise
+  esi_cutoffs = quantile(encounter_data$esi_prob, probs = esi_quantiles)
 
   encounter_data$esi = ifelse(encounter_data$esi_prob< esi_cutoffs[1], 1,
                               ifelse(encounter_data$esi_prob< esi_cutoffs[2], 2,
