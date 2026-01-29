@@ -1,45 +1,38 @@
-################################################################################
-# Get File Path Start
-#
-# Name: get_filepath_start
-# Purpose: For grabbing the start of file paths to make code transferrable to
-#          moving between PCs.
-#
-################################################################################
+#' Get File Path Start
+#'
+#' `get_filepath_start` is for grabbing the start of file paths to make code
+#' transferrable when moving between PCs.
+#' @export
 
 get_filepath_start = function(){
   starter = paste0("C:/Users/", Sys.info()["user"], "/")
 }
 
-################################################################################
-# Sample Size Adjusted for Site-Level Correlation
-#
-# Name: ss_site_cor_adj
-# Purpose: Calculating sample size adjusted for site-level correlation.
-#
-# Arguments:
-#   n - the unadjusted sample size
-#   nsites - the number of sites
-#   icc - Intraclass Correlation Coefficient (ICC)
-################################################################################
+#' Sample Size Adjusted for Site-Level Correlation
+#'
+#' `ss_site_cor_adj` is for calculating sample size adjusted for site-level
+#' correlation.
+#'
+#' @param n the unadjusted sample size
+#' @param nsites the number of sites
+#' @param icc Intraclass Correlation Coefficient (ICC)
+#' @export
 
 ss_site_cor_adj = function(n, nsites, icc){
   return((1-icc)/((nsites/n)-icc))
 }
 
-################################################################################
-# Difference in Median
-#
-# Name: difference_in_median
-# Purpose: Bootstrap Method to produce 95% CI of difference in medians of
-#          samples from two groups
-#
-# Arguments:
-#   group - the group (only designed for a variable with two levels/categories)
-#   sample - the numeric variable
-#   nits - the number of iterations
-#   decimal - the number of decimal points to present
-################################################################################
+#' Difference in Median
+#'
+#' `difference_in_median` is a Bootstrap Method to produce 95% CI of difference
+#' in medians of samples from two groups
+#'
+#' @param group the group (only designed for a variable with two levels/
+#' categories)
+#' @param sample the numeric variable
+#' @param nits the number of iterations
+#' @param decimal the number of decimal points to present
+#' @export
 
 difference_in_median = function(group, sample, nits = 500, decimal = 0){
 
@@ -66,22 +59,14 @@ difference_in_median = function(group, sample, nits = 500, decimal = 0){
   return(result)
 }
 
-################################################################################
-# Combining datasets (column bind)
-#
-# Name: cbind_fill
-# Purpose: Special column bind for combining columns when heach dataset does not
-#          have all the same rows
-#
-# Arguments:
-#   data_left - the first set of columns
-#   data_right - the second set of columns
-################################################################################
-
-library(dplyr)
-library(stringr)
-library(crayon)
-library(qdapTools)
+#' Combining datasets (column bind)
+#'
+#' `cbind_fill` Special column bind for combining columns when heach dataset
+#' does not have all the same rows
+#'
+#' @param data_left the first set of columns
+#' @param data_right the second set of columns
+#' @export
 
 cbind_fill = function(data_left, data_right){
 

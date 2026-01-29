@@ -1,18 +1,16 @@
-################################################################################
-# Chi Squared Test
-#
-# Name: chisq_result
-# Purpose: Organize output from chi-squared test for publication.
-#
-# Arguments:
-#   group - the grouping variable
-#   variable - the other variable
-#   decimal - the number of decimal places to be used in output
-#   p_only - when FALSE (default), return statistic and p-value; when TRUE
-#            return only the p-value
-#   mcsim - when FALSE (default), montecarlo simulation is not used; when TRUE
-#           monte carlo simulation is used; this is helpful when small sample
-################################################################################
+
+#' Chi Squared Test
+#'
+#' `chisq_result` organizes output from chi-squared test for publication.
+#'
+#' @param group the grouping variable
+#' @param variable the other variable
+#' @param decimal the number of decimal places to be used in output
+#' @param p_only when FALSE (default), return statistic and p-value; when TRUE
+#' return only the p-value
+#' @param mcsim when FALSE (default), montecarlo simulation is not used; when
+#' TRUE monte carlo simulation is used; this is helpful when small sample
+#' @export
 
 chisq_result = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FALSE){
 
@@ -37,22 +35,20 @@ chisq_result = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FA
   return(result)
 }
 
-################################################################################
-# Chi Squared Test (specifically for variable operationalized as a numeric flag
-#                   variable with 0s and 1s)
-#
-# Name: chisq_result_from_flag
-# Purpose: Organize output from chi-squared test for publication.
-#
-# Arguments:
-#   group - the grouping variable
-#   variable - the other variable
-#   decimal - the number of decimal places to be used in output
-#   p_only - when FALSE (default), return statistic and p-value; when TRUE
-#            return only the p-value
-#   mcsim - when FALSE (default), montecarlo simulation is not used; when TRUE
-#           monte carlo simulation is used; this is helpful when small sample
-################################################################################
+#' Chi Squared Test (Flag Variable)
+#'
+#' `chisq_result_from_flag` organizes output from chi-squared test for publication,
+#' specifically for variable operationalized as a numeric flag variable with 0s
+#' and 1s.
+#'
+#' @param group the grouping variable
+#' @param variable the other variable (numeric flag variable with 0s and 1s)
+#' @param decimal the number of decimal places to be used in output
+#' @param p_only when FALSE (default), return statistic and p-value; when TRUE
+#' return only the p-value
+#' @param mcsim when FALSE (default), montecarlo simulation is not used; when
+#' TRUE monte carlo simulation is used; this is helpful when small sample
+#' @export
 
 chisq_result_from_flag = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FALSE){
 
@@ -76,19 +72,17 @@ chisq_result_from_flag = function(group, variable, decimal = 0, p_only = FALSE, 
   return(result)
 }
 
-################################################################################
-# ANOVA Test (for 3+ groups)
-#
-# Name: anova_result
-# Purpose: Organize output from ANOVA test for publication.
-#
-# Arguments:
-#   group - the grouping variable
-#   variable - the other variable (numeric for ANOVA)
-#   decimal - the number of decimal places to be used in output
-#   p_only - when FALSE (default), return statistic and p-value; when TRUE
-#            return only the p-value
-################################################################################
+#' ANOVA Test
+#'
+#' `anova_result` organizes output from ANOVA test (for 3+ groups) for
+#' publication.
+#'
+#' @param group the grouping variable
+#' @param variable the other variable (numeric for ANOVA)
+#' @param decimal the number of decimal places to be used in output
+#' @param p_only when FALSE (default), return statistic and p-value; when TRUE
+#' return only the p-value
+#' @export
 
 anova_result = function(group, variable, decimal = 0, p_only = FALSE){
   summary = summary(aov(variable~group,data = data))[[1]]
@@ -105,19 +99,17 @@ anova_result = function(group, variable, decimal = 0, p_only = FALSE){
   return(result)
 }
 
-################################################################################
-# WILCOXON TEST (non-parametric version of t-test)
-#
-# Name: wilcoxon_result
-# Purpose: Organize output from wilcoxon test for publication.
-#
-# Arguments:
-#   group - the grouping variable (two groups)
-#   variable - the other variable (numeric)
-#   decimal - the number of decimal places to be used in output
-#   p_only - when FALSE (default), return statistic and p-value; when TRUE
-#            return only the p-value
-################################################################################
+#' WILCOXON TEST
+#'
+#' `wilcoxon_result` organizes output from wilcoxon test (non-parametric
+#' version of t-test) for publication.
+#'
+#' @param group the grouping variable (two groups)
+#' @param variable the other variable (numeric)
+#' @param decimal the number of decimal places to be used in output
+#' @param p_only when FALSE (default), return statistic and p-value; when TRUE
+#' return only the p-value
+#' @export
 
 wilcoxon_result = function(group, variable, decimal = 0, p_only = FALSE){
   test = wilcox.test(variable~group)
@@ -134,20 +126,17 @@ wilcoxon_result = function(group, variable, decimal = 0, p_only = FALSE){
   return(result)
 }
 
-################################################################################
-# KRUSKAL WALLIS (non-parametric version of ANOVA)
-#
-# Name: kruskal_wallis_result
-# Purpose: Organize output from kruskal wallis test for publication.
-#
-# Arguments:
-#   group - the grouping variable
-#   variable - the other variable (numeric)
-#   decimal - the number of decimal places to be used in output
-#   p_only - when FALSE (default), return statistic and p-value; when TRUE
-#            return only the p-value
-################################################################################
-
+#' KRUSKAL WALLIS
+#'
+#' `kruskal_wallis_result` organizes output from kruskal wallis test (non-parametric
+#' version of ANOVA) for publication.
+#'
+#' @param group the grouping variable
+#' @param variable the other variable (numeric)
+#' @param decimal the number of decimal places to be used in output
+#' @param p_only when FALSE (default), return statistic and p-value; when TRUE
+#' return only the p-value
+#' @export
 
 kruskal_wallis_result = function(group, variable, decimal = 0, p_only = FALSE){
   test = kruskal.test(variable~group)

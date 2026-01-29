@@ -11,3 +11,12 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/melissameekerphd/mmFunctions
 BugReports: https://github.com/melissameekerphd/mmFunctions/issues
+Imports: 
+  dplyr,
+  stringr,
+  crayon,
+  qdapTools
+Suggests:
+  roxygen2
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3

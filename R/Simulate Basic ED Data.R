@@ -1,15 +1,19 @@
-################################################################################
-# Name: simulate_ed_dataset
-# Purpose: Simulate a data set of ED encounters
-#
-# Arguments:
-#   n_encounters - the number of ED encounters
-#   n_patients - the number of patients; needs to be less than the number of
-#                encounters
-#   seed - the seed for random number generation
-################################################################################
 
-simulate_ed_dataset <- function(n_encounters = 10000, n_patients = 8500, seed = 42) {
+#' Simulate ED Dataset
+#'
+#' `simulate_ed_dataset` creates a simulated dataset of ED encounters with
+#' variables: encounter_id, patient_id, age, sex, language, esi, and
+#' time_to_abx.
+#'
+#' @param n_encounters the number of ED encounters
+#' @param n_patients the number of patients; needs to be less than the number
+#' of encounters
+#' @param seed the seed for random number generation
+#' @export
+
+simulate_ed_dataset <- function(n_encounters = 10000,
+                                n_patients = 8500,
+                                seed = 42) {
 
   if(n_patients>=n_encounters){
     print("Number of patients needs to be less than the number of encounters.")
