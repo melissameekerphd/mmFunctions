@@ -15,7 +15,9 @@ Imports:
   dplyr,
   stringr,
   crayon,
-  qdapTools
+  qdapTools,
+  olsrr, 
+  lmerTest
 Suggests:
   roxygen2
 Roxygen: list(markdown = TRUE)
