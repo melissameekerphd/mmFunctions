@@ -39,18 +39,23 @@ summary_continuous_variable = function(x, measure = "mean", decimal = 0,
     median = median(x, na.rm = TRUE)
     median_formatted = format(round(median,decimal), nsmall = decimal)
 
-    IQR = paste0("(", format(round(IQR(x, na.rm = TRUE),decimal), nsmall = decimal), ")")
+    IQR = IQR(x, na.rm = TRUE)
+    IQR_formatted = format(round(IQR(x, na.rm = TRUE),decimal), nsmall = decimal)
+    IQR_wrapped = paste0("(", IQR_formatted, ")")
 
     q1 = quantile(x, 0.25, na.rm = TRUE)
+    q1_formatted = format(round(q1,decimal), nsmall = decimal)
     q3 = quantile(x, 0.75, na.rm = TRUE)
-    quarts = paste0("[", format(round(q1,decimal), nsmall = decimal), ", ", format(round(q3,decimal), nsmall = decimal), "]")
+    q3_formatted = format(round(q3,decimal), nsmall = decimal)
+    quarts_wrapped = paste0("[", q1_formatted, ", ", q3_formatted, "]")
 
-    spread = ifelse(range, IQR, quarts)
+    spread_notsep = ifelse(range, IQR_wrapped, quarts_wrapped)
+    spread_sep = ifelse(range, IQR_formatted, quarts_wrapped)
 
     if(!separated){
-      result = c(paste0(description, " - median(IQR)"), paste(median_formatted, spread))
+      result = c(paste0(description, " - median(IQR)"), paste(median_formatted, spread_notsep))
     } else {
-      result = c(paste0(description, " - median(IQR)"), median_formatted, spread)
+      result = c(paste0(description, " - median(IQR)"), median_formatted, spread_sep)
     }
 
   } else {
@@ -121,20 +126,23 @@ table_continuous_by_group = function(group, x, decimal = 2, measure = "mean", ra
     for(g in 1:n_groups){
       median = median(x[group==groups[g]], na.rm = TRUE)
       median_formatted = format(round(median,decimal), nsmall = decimal)
-      IQR = paste0("(", format(round(IQR(x[group==groups[g]], na.rm = TRUE), decimal), nsmall = decimal), ")")
+      IQR = IQR(x[group==groups[g]], na.rm = TRUE)
+      IQR_formatted = format(round(IQR(x[group==groups[g]], na.rm = TRUE), decimal), nsmall = decimal)
+      IQR_wrapped = paste0("(", IQR_formatted, ")")
 
       q1 = quantile(x[group==groups[g]], 0.25, na.rm = TRUE)
+      q1_formatted = format(round(q1, decimal), nsmall = decimal)
       q3 = quantile(x[group==groups[g]], 0.75, na.rm = TRUE)
-      quarts = paste0("[", format(round(q1,decimal), nsmall = decimal), ", ", format(round(q3,decimal), nsmall = decimal), "]")
+      q3_formatted = format(round(q3, decimal), nsmall = decimal)
+      quarts_wrapped = paste0("[", q1_formatted, ", ", q3_formatted, "]")
 
-      spread = ifelse(range, IQR, quarts)
-
-      results[g] = paste(median_formatted, spread)
+      spread_sep = ifelse(range, IQR_formatted, quarts_wrapped)
+      spread_notsep = ifelse(range, IQR_wrapped, quarts_wrapped)
 
       if(!separated){
-        results[g] = paste(median_formatted, spread)
+        results[g] = paste(median_formatted, spread_notsep)
       } else {
-        results[(g*2-1):(g*2)] = c(median_formatted, spread)
+        results[(g*2-1):(g*2)] = c(median_formatted, spread_sep)
       }
     }
   }
@@ -225,7 +233,7 @@ frequency_of_value = function(x, value, decimal = 0, separated = FALSE){
   if(!separated){
     result = paste0(n_formatted, " (", pct_formatted, "%)")
   } else {
-    result = c(n,pct)
+    result = c(n, pct)
   }
 
   return(result)
@@ -279,7 +287,7 @@ frequency_of_variable = function(x, decimal = 0, use_na = "ifany", remove_empty 
     n_formatted = format(n, big.mark = ",")
     pct = sum(is.na(x))/length(x)*100
     pct_formatted = format(round(pct, decimal), nsmall = decimal)
-    missing_freq = paste0(n, " (", pct, "%)")
+    missing_freq = paste0(n_formatted, " (", pct_formatted, "%)")
 
     if(!separated){
       missing_row = c("Missing", missing_freq)
