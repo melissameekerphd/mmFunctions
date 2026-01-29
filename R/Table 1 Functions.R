@@ -496,7 +496,7 @@ frequency_flag_by_patient_group = function(patient_group, variable, decimal = 0,
         two_by_two = matrix( two_by_two,
                              nrow=nrow(two_by_two_freq),
                              dimnames = list(rownames(two_by_two_freq),
-                                             paste0(rep(colnames(two_by_two_freq), each = 2), rep(c(" - n", " - pct"), times = ncol(two_by_two_freq)))))
+                                             paste0(rep(colnames(two_by_two_freq), each = 2), rep(c(" - part1", " - part2"), times = ncol(two_by_two_freq)))))
 
       }
 
@@ -527,7 +527,7 @@ frequency_flag_by_patient_group = function(patient_group, variable, decimal = 0,
         two_by_two = matrix( two_by_two,
                              nrow=nrow(two_by_two_freq),
                              dimnames = list(rownames(two_by_two_freq),
-                                             paste0(rep(colnames(two_by_two_freq), each = 2), rep(c(" - n", " - pct"), times = ncol(two_by_two_freq)))))
+                                             paste0(rep(colnames(two_by_two_freq), each = 2), rep(c(" - part1", " - part2"), times = ncol(two_by_two_freq)))))
       }
 
     } else {
