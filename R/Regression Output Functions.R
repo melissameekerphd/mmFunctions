@@ -22,10 +22,10 @@ calculate_lm_output = function(lm_model, decimal = 2){
 
   coef = coef[-1,]
 
-  coef = cbind(coef,ols_vif_tol(lm_model))
+  #coef = cbind(coef,ols_vif_tol(lm_model))
 
-
-  coef = coef[,c("Estimate", "conf_int", "pvalue", "VIF")]
+  coef = coef[,c("Estimate", "conf_int", "pvalue")]
+  #coef = coef[,c("Estimate", "conf_int", "pvalue", "VIF")]
 
   return(coef)
 }
