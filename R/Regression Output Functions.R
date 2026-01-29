@@ -110,7 +110,8 @@ calculate_glm_output = function(glm_model){
 
 calculate_lmer_output = function(model, decimal = 0){
   #summary = summary(model, ddf = "Satterthwaite")#link: https://link.springer.com/article/10.3758/s13428-016-0809-y
-  summary = lmerTest::summary.lmerModLmerTest(model)
+  for_lmerTest = lmerTest::as_lmerModLmerTest(model)
+  summary = summary(for_lmerTest)
   coefs = summary$coefficients
   coefs = as.data.frame(coefs)
   coefs = coefs[2:nrow(coefs),]
