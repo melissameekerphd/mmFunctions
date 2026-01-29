@@ -29,7 +29,7 @@ simulate_ed_dataset <- function(n_encounters = 10000,
   age[which(age<=0)] = runif(n = length(age[which(age<=0)]), min = 1, max = 17)
   age[which(age>=100)] = runif(n = length(age[which(age>=100)]), min = 65, max = 99)
   sex = sample(c("Female", "Male"), size = n_patients, replace = TRUE)
-  language = sample(c("English", "Non-English"), size = n_patients, replace = TRUE)
+  language = sample(c("English", "Non-English"), size = n_patients, replace = TRUE, prob = c(0.9, 0.1))
 
   pat_data = as.data.frame(cbind(unique_pat_ids, age, sex, language))
 
