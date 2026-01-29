@@ -157,7 +157,7 @@ calculate_glmer_output = function(model, decimal = 2){
 
   if(family == "binomial"){
     colnames(coef_exp) = c("odds ratio", "95% CI", "p-value")
-  } else if(family == "poisson"){
+  } else if(family == "poisson"|substr(family,1,17)=="Negative Binomial"){
     colnames(coef_exp) = c("rate ratio", "95% CI", "p-value")
   }
 
