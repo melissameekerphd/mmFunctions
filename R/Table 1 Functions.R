@@ -111,12 +111,14 @@ table_continuous_by_group = function(group, x, decimal = 2, measure = "mean", ra
   if(measure == "mean"){
     for(g in 1:n_groups){
       mean = mean(x[group==groups[g]], na.rm = TRUE)
+      mean_formatted = format(round(mean,decimal), nsmall = decimal)
       sd = sd(x[group==groups[g]], na.rm = TRUE)
+      sd_formatted = format(round(sd,decimal), nsmall = decimal)
 
       if(!separated){
-        results[g] = paste0(format(round(mean,decimal), nsmall = decimal), " (", format(round(sd,decimal), nsmall = decimal), ")")
+        results[g] = paste0(mean_formatted, " (", sd_formatted, ")")
       } else {
-        results[(g*2-1):(g*2)] = c(mean, sd)
+        results[(g*2-1):(g*2)] = c(mean_formatted, sd_formatted)
       }
     }
   }
@@ -233,7 +235,7 @@ frequency_of_value = function(x, value, decimal = 0, separated = FALSE){
   if(!separated){
     result = paste0(n_formatted, " (", pct_formatted, "%)")
   } else {
-    result = c(n, pct)
+    result = c(n_formatted, pct_formatted)
   }
 
   return(result)
@@ -292,7 +294,7 @@ frequency_of_variable = function(x, decimal = 0, use_na = "ifany", remove_empty 
     if(!separated){
       missing_row = c("Missing", missing_freq)
     } else {
-      missing_row = c("Missing", n, pct)
+      missing_row = c("Missing", n_formatted, pct_formatted)
     }
 
     results = rbind(results, missing_row)
@@ -337,9 +339,9 @@ frequency_by_patient_group = function(patient_group, variable, decimal = 0, perc
                            nrow=nrow(two_by_two_freq), dimnames=dimnames(two_by_two_freq) )
     } else {
 
-      two_by_two = cbind(two_by_two_freq[,1], two_by_two_pct[,1])
-      for(c in 2:ncol(two_by_two_pct)){
-        two_by_two = cbind(two_by_two, two_by_two_freq[,c], two_by_two_pct[,c])
+      two_by_two = cbind(format(two_by_two_freq[,1], big.mark = ","), two_by_two_pct_formatted[,1])
+      for(c in 2:ncol(two_by_two_pct_formatted)){
+        two_by_two = cbind(two_by_two, format(two_by_two_freq[,c], big.mark = ","), two_by_two_pct_formatted[,c])
       }
       two_by_two = matrix( two_by_two,
                            nrow=nrow(two_by_two_freq),
@@ -358,9 +360,9 @@ frequency_by_patient_group = function(patient_group, variable, decimal = 0, perc
       two_by_two = matrix( paste0(format(two_by_two_freq, big.mark = ","), " (", two_by_two_pct_formatted, "%)"),
                            nrow=nrow(two_by_two_freq), dimnames=dimnames(two_by_two_freq) )
     } else {
-      two_by_two = cbind(two_by_two_freq[,1], two_by_two_pct[,1])
-      for(c in 2:ncol(two_by_two_pct)){
-        two_by_two = cbind(two_by_two, two_by_two_freq[,c], two_by_two_pct[,c])
+      two_by_two = cbind(format(two_by_two_freq[,1], big.mark = ","), two_by_two_pct_formatted[,1])
+      for(c in 2:ncol(two_by_two_pct_formatted)){
+        two_by_two = cbind(two_by_two, format(two_by_two_freq[,c], big.mark = ","), two_by_two_pct_formatted[,c])
       }
       two_by_two = matrix( two_by_two,
                            nrow=nrow(two_by_two_freq),
@@ -405,16 +407,22 @@ frequency_of_flag_variable = function(x, decimal = 0, show_denom = FALSE, separa
 
   #Evaluating frequency:
   n = sum(x, na.rm = TRUE)
+  n_formatted = format(n, big.mark =",")
+  pct = n/length(x)*100
+  pct_formatted = round(n/length(x)*100,decimal)
+
+  denom = length(x)
+  denom_formatted = format(denom, big.mark =",")
 
   if(!separated){
     if(show_denom){
-      results[1,2] = paste0(format(n, big.mark =","), "/", format(length(x), big.mark =","), " (", round(n/length(x)*100,decimal), "%)")
+      results[1,2] = paste0(n_formatted, "/", denom_formatted, " (", pct_formatted, "%)")
     } else {
-      results[1,2] = paste0(format(n, big.mark =","), " (", round(n/length(x)*100,decimal), "%)")
+      results[1,2] = paste0(n_formatted, " (", pct_formatted, "%)")
     }
   } else {
-    results[1,2] = n
-    results[1,3] = n/length(x)*100
+    results[1,2] = n_formatted
+    results[1,3] = pct_formatted
   }
 
   #If Missing Data:
@@ -424,9 +432,12 @@ frequency_of_flag_variable = function(x, decimal = 0, show_denom = FALSE, separa
     pct = n/length(x)*100
     pct_formatted = round(sum(is.na(x))/length(x)*100, decimal)
 
+    denom = length(x)
+    denom_formatted = format(denom, big.mark =",")
+
     if(!separated){
       if(show_denom){
-        missing_freq = paste0(n_formatted, "/", length(x), " (", pct_formatted, "%)")
+        missing_freq = paste0(n_formatted, "/", denom_formatted, " (", pct_formatted, "%)")
       } else{
         missing_freq = paste0(n_formatted, " (", pct_formatted, "%)")
       }
@@ -434,7 +445,7 @@ frequency_of_flag_variable = function(x, decimal = 0, show_denom = FALSE, separa
       missing_row = c("Missing", missing_freq)
 
     } else {
-      missing_row = c("Missing", n, pct)
+      missing_row = c("Missing", n_formatted, pct_formatted)
     }
 
     results = rbind(results, missing_row)
@@ -481,8 +492,9 @@ frequency_flag_by_patient_group = function(patient_group, variable, decimal = 0,
 
     if(percent_type=="col"){
 
-      two_by_two_pct = t(apply(two_by_two_freq,1,function(x) format(round(x/colSums(two_by_two_freq)*100,decimal), nsmall = decimal)))
-      two_by_two_pct[which(two_by_two_pct=="NaN")] = "0"
+      two_by_two_pct = t(apply(two_by_two_freq,1,function(x) x/colSums(two_by_two_freq)*100))
+      two_by_two_pct_formatted = format(round(two_by_two_pct,decimal), nsmall = decimal)
+      two_by_two_pct_formatted[which(two_by_two_pct_formatted=="NaN")] = "0"
 
       two_by_two_denom = rbind(t(colSums(two_by_two_freq)), t(colSums(two_by_two_freq)))
 
@@ -490,16 +502,16 @@ frequency_flag_by_patient_group = function(patient_group, variable, decimal = 0,
         if(show_denom){
           two_by_two = matrix( paste0(format(two_by_two_freq, big.mark = ","), "/",
                                       format(two_by_two_denom, big.mark = ","),
-                                      " (", two_by_two_pct, "%)"),
+                                      " (", two_by_two_pct_formatted, "%)"),
                                nrow=nrow(two_by_two_freq), dimnames=dimnames(two_by_two_freq) )
         } else {
-          two_by_two = matrix( paste0(format(two_by_two_freq, big.mark = ","), " (", two_by_two_pct, "%)"),
+          two_by_two = matrix( paste0(format(two_by_two_freq, big.mark = ","), " (", two_by_two_pct_formatted, "%)"),
                                nrow=nrow(two_by_two_freq), dimnames=dimnames(two_by_two_freq) )
         }
       } else {
-        two_by_two = cbind(two_by_two_freq[,1], two_by_two_pct[,1])
-        for(c in 2:ncol(two_by_two_pct)){
-          two_by_two = cbind(two_by_two, two_by_two_freq[,c], two_by_two_pct[,c])
+        two_by_two = cbind(format(two_by_two_freq[,1], big.mark = ","), two_by_two_pct_formatted[,1])
+        for(c in 2:ncol(two_by_two_pct_formatted)){
+          two_by_two = cbind(two_by_two, format(two_by_two_freq[,c], big.mark = ","), two_by_two_pct_formatted[,c])
         }
         two_by_two = matrix( two_by_two,
                              nrow=nrow(two_by_two_freq),
@@ -511,8 +523,9 @@ frequency_flag_by_patient_group = function(patient_group, variable, decimal = 0,
 
     } else if(percent_type == "row"){
 
-      two_by_two_pct = t(apply(two_by_two_freq,1,function(x) format(round(x/sum(x)*100,decimal), nsmall = decimal)))
-      two_by_two_pct[which(two_by_two_pct=="NaN")] = "0"
+      two_by_two_pct = t(apply(two_by_two_freq,1,function(x) x/sum(x)*100))
+      two_by_two_pct_formatted = format(round(two_by_two_pct,decimal), nsmall = decimal)
+      two_by_two_pct_formatted[which(two_by_two_pct_formatted=="NaN")] = "0"
 
       two_by_two_denom = matrix(rep(rowSums(two_by_two_freq), times = ncol(two_by_two_pct)),
                                 ncol =ncol(two_by_two_pct))
@@ -521,16 +534,16 @@ frequency_flag_by_patient_group = function(patient_group, variable, decimal = 0,
         if(show_denom){
           two_by_two = matrix( paste0(format(two_by_two_freq, big.mark = ","), "/",
                                       format(two_by_two_denom, big.mark = ","),
-                                      " (", two_by_two_pct, "%)"),
+                                      " (", two_by_two_pct_formatted, "%)"),
                                nrow=nrow(two_by_two_freq), dimnames=dimnames(two_by_two_freq) )
         } else {
-          two_by_two = matrix( paste0(format(two_by_two_freq, big.mark = ","), " (", two_by_two_pct, "%)"),
+          two_by_two = matrix( paste0(format(two_by_two_freq, big.mark = ","), " (", two_by_two_pct_formatted, "%)"),
                                nrow=nrow(two_by_two_freq), dimnames=dimnames(two_by_two_freq) )
         }
       } else {
-        two_by_two = cbind(two_by_two_freq[,1], two_by_two_pct[,1])
-        for(c in 2:ncol(two_by_two_pct)){
-          two_by_two = cbind(two_by_two, two_by_two_freq[,c], two_by_two_pct[,c])
+        two_by_two = cbind(format(two_by_two_freq[,1], big.mark = ","), two_by_two_pct_formatted[,1])
+        for(c in 2:ncol(two_by_two_pct_formatted)){
+          two_by_two = cbind(two_by_two, format(two_by_two_freq[,c], big.mark = ","), two_by_two_pct_formatted[,c])
         }
         two_by_two = matrix( two_by_two,
                              nrow=nrow(two_by_two_freq),
