@@ -8,10 +8,10 @@
 #' @param measure can take value "mean" (default) or "median"
 #' @param description the name of the variable (x); you can specify your own
 #' @param range can be TRUE or FALSE; when type = "median", range = TRUE will
-#' output the [Q1, Q3] and range = FALSE will output the interquartile range
+#' output the (Q1, Q3) and range = FALSE will output the interquartile range
 #' value
 #' @param separated TRUE if you want the mean/median separate from the
-#' SD/IQR/[Q1, Q3] and FALSE (default) if you want them pasted into one
+#' SD/IQR/(Q1, Q3) and FALSE (default) if you want them pasted into one
 #' @export
 
 summary_continuous_variable = function(x, measure = "mean", decimal = 0,
@@ -79,10 +79,10 @@ summary_continuous_variable = function(x, measure = "mean", decimal = 0,
 #' @param decimal the number of decimal places to be used in output
 #' @param measure can take value "mean" (default) or "median"
 #' @param range can be TRUE or FALSE; when type = "median", range = TRUE will
-#' output the [Q1, Q3] and range = FALSE will output the interquartile range
+#' output the (Q1, Q3) and range = FALSE will output the interquartile range
 #' value
 #' @param separated TRUE if you want the mean/median separate from the
-#' SD/IQR/[Q1, Q3] and FALSE (default) if you want them pasted into one
+#' SD/IQR/(Q1, Q3) and FALSE (default) if you want them pasted into one
 #' @export
 
 table_continuous_by_group = function(group, x, decimal = 2, measure = "mean", range = TRUE, separated = FALSE){
