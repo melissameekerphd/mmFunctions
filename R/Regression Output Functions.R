@@ -124,7 +124,7 @@ calculate_lmer_output = function(model, decimal = 0){
   results$confint = paste0("[", round(results$`2.5 %`,decimal), ", ", round(results$`97.5 %`, decimal), "]")
   results$pvalue = ifelse(results$`Pr(>|t|)`<0.001, "<0.001", round(results$`Pr(>|t|)`, 3))
   results$estimate = round(results$Estimate, decimal)
-  results = results[,c("estimate", "pvalue", "confint")]
+  results = results[,c("estimate", "confint", "pvalue")]
 
   return(results)
 }
