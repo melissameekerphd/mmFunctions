@@ -22,10 +22,10 @@ calculate_lm_output = function(lm_model, decimal = 2){
 
   coef = coef[-1,]
 
-  #coef = cbind(coef,ols_vif_tol(lm_model))
+  coef = cbind(coef, olsrr::ols_vif_tol(lm_model))
 
-  coef = coef[,c("Estimate", "conf_int", "pvalue")]
-  #coef = coef[,c("Estimate", "conf_int", "pvalue", "VIF")]
+  #coef = coef[,c("Estimate", "conf_int", "pvalue")]
+  coef = coef[,c("Estimate", "conf_int", "pvalue", "VIF")]
 
   return(coef)
 }
@@ -110,7 +110,7 @@ calculate_glm_output = function(glm_model){
 
 calculate_lmer_output = function(model, decimal = 0){
   #summary = summary(model, ddf = "Satterthwaite")#link: https://link.springer.com/article/10.3758/s13428-016-0809-y
-  summary = summary(model)
+  summary = lmerTest::summary(model)
   coefs = summary$coefficients
   coefs = as.data.frame(coefs)
   coefs = coefs[2:nrow(coefs),]
