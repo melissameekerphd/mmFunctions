@@ -1,19 +1,18 @@
-################################################################################
-# Name: summary_continuous_variable
-# Purpose: Summarize a continuous variable by group for a descriptive table.
-#
-# Arguments:
-#   x - the continuous variable
-#   decimal - the number of decimal places presented in output
-#   measure - can take value "mean" (default) or "median"
-#   description - the name of the variable (x); you can specify your own
-#   range - can be TRUE or FALSE; when type = "median", range = TRUE will output
-#           the [Q1, Q3] and range = FALSE will output the interquartile range
-#           value
-#   separated - TRUE if you want the mean/median separate from the
-#               SD/IQR/[Q1, Q3] and FALSE (default) if you want them pasted into
-#               one
-################################################################################
+#' Summarize Numeric Variable for Table 1
+#'
+#' `summary_continuous_variable` summarizes a continuous variable for
+#' a descriptive table.
+#'
+#' @param x the continuous variable
+#' @param decimal the number of decimal places to be used in output
+#' @param measure can take value "mean" (default) or "median"
+#' @param description the name of the variable (x); you can specify your own
+#' @param range can be TRUE or FALSE; when type = "median", range = TRUE will
+#' output the [Q1, Q3] and range = FALSE will output the interquartile range
+#' value
+#' @param separated TRUE if you want the mean/median separate from the
+#' SD/IQR/[Q1, Q3] and FALSE (default) if you want them pasted into one
+#' @export
 
 summary_continuous_variable = function(x, measure = "mean", decimal = 0,
                                        description = deparse(substitute(x)),
@@ -70,22 +69,21 @@ summary_continuous_variable = function(x, measure = "mean", decimal = 0,
   return(result)
 }
 
-################################################################################
-# Name: table_continuous_by_group
-# Purpose: Summarize a continuous variable by group for a descriptive table.
-#
-# Arguments:
-#   group - the grouping variable
-#   x - the continuous variable
-#   decimal - the number of decimal places presented in output
-#   measure - can take value "mean" (default) or "median"
-#   range - can be TRUE or FALSE; when measure = "median", range = TRUE will output
-#           the [Q1, Q3] and range = FALSE will output the interquartile range
-#           value
-#   separated - TRUE if you want the mean/median separate from the
-#               SD/IQR/[Q1, Q3] and FALSE (default) if you want them pasted into
-#               one
-################################################################################
+#' Summarize Numeric Variable By Group for Table 1
+#'
+#' `table_continuous_by_group` summarizes a continuous variable by group for
+#' a descriptive table.
+#'
+#' @param group the grouping variable
+#' @param x the continuous variable
+#' @param decimal the number of decimal places to be used in output
+#' @param measure can take value "mean" (default) or "median"
+#' @param range can be TRUE or FALSE; when type = "median", range = TRUE will
+#' output the [Q1, Q3] and range = FALSE will output the interquartile range
+#' value
+#' @param separated TRUE if you want the mean/median separate from the
+#' SD/IQR/[Q1, Q3] and FALSE (default) if you want them pasted into one
+#' @export
 
 table_continuous_by_group = function(group, x, decimal = 2, measure = "mean", range = TRUE, separated = FALSE){
 
@@ -144,15 +142,15 @@ table_continuous_by_group = function(group, x, decimal = 2, measure = "mean", ra
   return(results)
 }
 
-################################################################################
-# Name: summary_continuous_spread
-# Purpose: Summarize a continuous variable with minimum, Q1, median, Q3, and max
-#
-# Arguments:
-#   group - the grouping variable
-#   x - the continuous variable
-#   decimal - the number of decimal places presented in output
-################################################################################
+#' Spread of Numeric Variable
+#'
+#' `summary_continuous_spread` summarizes a continuous variable with minimum,
+#' Q1, median, Q3, and max
+#'
+#' @param group the grouping variable
+#' @param x the continuous variable
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 summary_continuous_spread = function(x, decimal = 0, description = deparse(substitute(x))){
   median = median(x, na.rm = TRUE)
@@ -170,16 +168,15 @@ summary_continuous_spread = function(x, decimal = 0, description = deparse(subst
   return(result)
 }
 
-################################################################################
-# Name: table_continuous_by_group_spread
-# Purpose: Summarize a continuous variable by group with minimum, Q1, median,
-#    Q3, and max
-#
-# Arguments:
-#   group - the grouping variable
-#   x - the continuous variable
-#   decimal - the number of decimal places presented in output
-################################################################################
+#' Spread of Numeric Variable by Group
+#'
+#' `table_continuous_by_group_spread` summarizes a continuous variable by group
+#' with minimum, Q1, median, Q3, and max
+#'
+#' @param group the grouping variable
+#' @param x the continuous variable
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 table_continuous_by_group_spread = function(group, x, decimal = 2){
 
@@ -207,17 +204,16 @@ table_continuous_by_group_spread = function(group, x, decimal = 2){
   return(results)
 }
 
-################################################################################
-# Name: frequency_of_value
-# Purpose: returns the frequency and % of a specific category (value) of a variable (x)
-#
-# Arguments:
-#   x - the categorical variable
-#   value - the category that you want to determine the frequency/percent of
-#   decimal - the number of decimal places presented in output
-#   separated - TRUE if you want the frequency separate from the percent and
-#               FALSE (default) if you want them pasted into one
-################################################################################
+#' Frequency of Value
+#'
+#' `frequency_of_value` returns the frequency and % of a specific category
+#' (value) of a variable (x)
+#'
+#' @param x the categorical variable
+#' @param value the category that you want to determine the frequency/percent of
+#' @param decimal the number of decimal places to be used in output
+#' @param separated TRUE if you want the frequency separate from the percent
+#' and FALSE (default) if you want them pasted into one
 
 frequency_of_value = function(x, value, decimal = 0, separated = FALSE){
   sub = which(x==value)
@@ -235,17 +231,21 @@ frequency_of_value = function(x, value, decimal = 0, separated = FALSE){
   return(result)
 }
 
-################################################################################
-# Name: frequency_of_variable
-# Purpose: returns the frequency and % of all categories of a variable (x)
-#
-# Arguments:
-#   x - the categorical variable
-#   value - the category that you want to determine the frequency/percent of
-#   decimal - the number of decimal places presented in output
-#   separated - TRUE if you want the frequency separate from the percent and
-#               FALSE (default) if you want them pasted into one
-################################################################################
+#' Frequency of Categories of Categorical Variable
+#'
+#' `frequency_of_variable` returns the frequency and % of all categories of a
+#' variable (x)
+#'
+#' @param x the categorical variable
+#' @param decimal the number of decimal places to be used in output
+#' @param use_na the default ("ifany") shows a row for missing data if there is
+#' any; if set to anything else, it will not.
+#' @param remove_empty when FALSE (default), this removes the row for a
+#' category in which there are no occurrences; if TRUE, it keeps the row in the
+#' output
+#' @param separated TRUE if you want the frequency separate from the percent
+#' and FALSE (default) if you want them pasted into one
+#' @export
 
 frequency_of_variable = function(x, decimal = 0, use_na = "ifany", remove_empty = FALSE, separated = FALSE){
   if(remove_empty){
@@ -293,21 +293,21 @@ frequency_of_variable = function(x, decimal = 0, use_na = "ifany", remove_empty 
   return(results)
 }
 
-################################################################################
-# Name: frequency_by_patient_group
-# Purpose: returns the frequency and % of the categorical variable by group
-#
-# Arguments:
-#   patient_group - the grouping variable
-#   variable - the categorical variable
-#   decimal - the number of decimal places presented in output
-#   percent_type - when "col" (default), it computes column percents; when "row"
-#                  it computes row percents
-#   remove_empty - when TRUE (default), it removes rows categories with zero
+#' Frequency of Categories of Categorical Variable
+#'
+#' `frequency_by_patient_group` returns the frequency and % of all categories
+#' of a variable (variable) by group (patient_group)
+#'
+#' @param patient_group the grouping variable
+#' @param variable the categorical variable
+#' @param decimal the number of decimal places to be used in output
+#' @param percent_type when "col" (default), it computes column percents; when
+#' "row" it computes row percents
+#' @param remove_empty when TRUE (default), it removes rows categories with zero
 #                  frequency
-#   separated - TRUE if you want the frequency separate from the percent and
-#               FALSE (default) if you want them pasted into one
-################################################################################
+#' @param separated TRUE if you want the frequency separate from the percent
+#' and FALSE (default) if you want them pasted into one
+#' @export
 
 frequency_by_patient_group = function(patient_group, variable, decimal = 0, percent_type = "col", remove_empty = TRUE, use_na = "ifany", separated = FALSE){
 
@@ -368,21 +368,19 @@ frequency_by_patient_group = function(patient_group, variable, decimal = 0, perc
   return(two_by_two)
 }
 
-################################################################################
-# Name: frequency_of_flag_variable
-# Purpose: returns the frequency and % of the flag (1s) of a variable (x) coded
-#          as 0s and 1s
-#
-# Arguments:
-#   x - the flag variable (must be coded as 0s and 1s)
-#   decimal - the number of decimal places presented in output
-#   show_denom - when FALSE (default) the output does not include the
-#                denominator; when TRUE the output does include the denominator;
-#                note - this functionality is only built out for when
-#                separated = FALSE
-#   separated - TRUE if you want the frequency separate from the percent and
-#               FALSE (default) if you want them pasted into one
-################################################################################
+#' Frequency of Flag in Binary Variable
+#'
+#' `frequency_of_flag_variable` returns the frequency and % of the flag (1s) of
+#' a variable (x) coded as 0s and 1s
+#'
+#' @param x the flag variable (must be coded as 0s and 1s)
+#' @param decimal the number of decimal places to be used in output
+#' @param show_denom when FALSE (default) the output does not include the
+#' denominator; when TRUE the output does include the denominator; note - this
+#' functionality is only built out for when separated = FALSE
+#' @param separated TRUE if you want the frequency separate from the percent
+#' and FALSE (default) if you want them pasted into one
+#' @export
 
 frequency_of_flag_variable = function(x, decimal = 0, show_denom = FALSE, separated = FALSE){
 
@@ -437,24 +435,22 @@ frequency_of_flag_variable = function(x, decimal = 0, show_denom = FALSE, separa
   return(results)
 }
 
-################################################################################
-# Name: frequency_flag_by_patient_group
-# Purpose: returns the frequency and % of the flag (1s) of a variable (x) coded
-#          as 0s and 1s by group
-#
-# Arguments:
-#   patient_group - the grouping variable
-#   variable - the flag variable (must be coded as 0s and 1s)
-#   decimal - the number of decimal places presented in output
-#   percent_type - when "col" (default), it computes column percents; when "row"
-#                  it computes row percents
-#   show_denom - when FALSE (default) the output does not include the
-#                denominator; when TRUE the output does include the denominator;
-#                note - this functionality is only built out for when
-#                separated = FALSE
-#   separated - TRUE if you want the frequency separate from the percent and
-#               FALSE (default) if you want them pasted into one
-################################################################################
+#' Frequency of Flag in Binary Variable by Group
+#'
+#' `frequency_flag_by_patient_group` returns the frequency and % of the flag (1s) of
+#' a variable (x) coded as 0s and 1s by group
+#'
+#' @param patient_group the grouping variable
+#' @param variable the flag variable (must be coded as 0s and 1s)
+#' @param decimal the number of decimal places to be used in output
+#' @param percent_type when "col" (default), it computes column percents; when
+#' "row" it computes row percents
+#' @param show_denom when FALSE (default) the output does not include the
+#' denominator; when TRUE the output does include the denominator; note - this
+#' functionality is only built out for when separated = FALSE
+#' @param separated TRUE if you want the frequency separate from the percent
+#' and FALSE (default) if you want them pasted into one
+#' @export
 
 frequency_flag_by_patient_group = function(patient_group, variable, decimal = 0, percent_type = "col", show_denom = FALSE, separated = FALSE){
 

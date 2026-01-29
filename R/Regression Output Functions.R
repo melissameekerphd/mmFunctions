@@ -1,14 +1,11 @@
-################################################################################
-# LINEAR REGRESSION
-#
-# Name: calculate_lm_output
-# Purpose: Organize linear regression model output into table for publication.
-# Note: Always evaluate output from summary of model, as well.
-#
-# Arguments:
-#   lm_model - the linear regression model output
-#   decimal - the number of decimal places to be used in output
-################################################################################
+#' LINEAR REGRESSION
+#'
+#' `calculate_lm_output` organizes linear regression model output into table
+#' for publication. Note: Always evaluate output from summary of model, as well.
+#'
+#' @param lm_model the linear regression model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 calculate_lm_output = function(lm_model, decimal = 2){
   summary = summary(lm_model)
@@ -33,20 +30,18 @@ calculate_lm_output = function(lm_model, decimal = 2){
   return(coef)
 }
 
-################################################################################
-# GENERALIZED LINEAR REGRESSION (GLM)
-#
-# Name: calculate_glm_output
-# Purpose: Organize genearlized linear regression model output (binomial,
-#            quasipoisson, and poisson) into table for publication. Binomial for
-#            binary outcome data; poisson for count outcome data; quasipoisson
-#            when there is overdispersion.
-# Note: Always evaluate output from summary of model, as well.
-#
-# Arguments:
-#   glm_model - the generalized linear regression model output
-#   decimal - the number of decimal places to be used in output
-################################################################################
+#' GENERALIZED LINEAR REGRESSION (GLM)
+#'
+#' `calculate_glm_output` organizes genearlized linear regression model output
+#' (binomial, quasipoisson, and poisson) into table for publication. Binomial
+#' for binary outcome data; poisson for count outcome data; quasipoisson when
+#' there is overdispersion.Note: Always evaluate output from summary of model,
+#' as well.
+#'
+#' @param glm_model the generalized linear regression model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
+
 
 calculate_glm_output = function(glm_model){
 
@@ -103,18 +98,15 @@ calculate_glm_output = function(glm_model){
   return(glm_results)
 }
 
-
-################################################################################
-# LINEAR MIXED EFFECT MODEL
-#
-# Name: calculate_lmer_output
-# Purpose: Organize linear mixed effect model output into table for publication.
-# Note: Always evaluate output from summary of model, as well.
-#
-# Arguments:
-#   model - the linear mixed effect regression model output
-#   decimal - the number of decimal places to be used in output
-################################################################################
+#' LINEAR MIXED EFFECT MODEL
+#'
+#' `calculate_lmer_output` organizes linear mixed effect regression model output
+#' into table for publication. Note: Always evaluate output from summary of
+#' model, as well.
+#'
+#' @param model the linear mixed effect regression model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 calculate_lmer_output = function(model, decimal = 0){
   #summary = summary(model, ddf = "Satterthwaite")#link: https://link.springer.com/article/10.3758/s13428-016-0809-y
@@ -136,18 +128,15 @@ calculate_lmer_output = function(model, decimal = 0){
   return(results)
 }
 
-################################################################################
-# GENERALIZED LINEAR MIXED EFFECT MODEL
-#
-# Name: calculate_glmer_output
-# Purpose: Organize generalized linear mixed effect model (binomial and poisson)
-#           output into table for publication.
-# Note: Always evaluate output from summary of model, as well.
-#
-# Arguments:
-#   model - the linear mixed effect regression model output
-#   decimal - the number of decimal places to be used in output
-################################################################################
+#' GENERALIZED LINEAR MIXED EFFECT MODEL
+#'
+#' `calculate_glmer_output` organizes generalized linear mixed effect
+#' regression model (binomial and poisson) output into table for publication.
+#' Note: Always evaluate output from summary of model, as well.
+#'
+#' @param model the generalized linear mixed effect regression model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 calculate_glmer_output = function(model, decimal = 2){
 
@@ -174,19 +163,16 @@ calculate_glmer_output = function(model, decimal = 2){
   return(coef_exp[-1,])
 }
 
-################################################################################
-# GENERALIZED LINEAR MIXED EFFECT MODEL: Modified Poisson
-#
-# Name: calculate_glmer_modified_poisson_output
-# Purpose: Organize modified poisson mixed effect model output into table for
-#           publication. Applies standard errors to be able to use poisson model
-#           for binary outcome.
-# Note: Always evaluate output from summary of model, as well.
-#
-# Arguments:
-#   model - the generalized linear mixed effect regression model output
-#   decimal - the number of decimal places to be used in output
-################################################################################
+#' GENERALIZED LINEAR MIXED EFFECT MODEL: Modified Poisson
+#'
+#' `calculate_glmer_modified_poisson_output` organizes modified poisson mixed
+#' effect model output into table for publication. Applies standard errors to
+#' be able to use poisson model for binary outcome.
+#' Note: Always evaluate output from summary of model, as well.
+#'
+#' @param model the generalized linear mixed effect regression model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 calculate_glmer_modified_poisson_output = function(model, decimal = 2){
   summary = summary(model)
@@ -212,19 +198,15 @@ calculate_glmer_modified_poisson_output = function(model, decimal = 2){
   return(coef_exp[-1,])
 }
 
-
-################################################################################
-# GENERALIZED ESTIMATING EQUATION MODELS
-#
-# Name: calculate_gee_output
-# Purpose: Organize GEE model (Gaussian, Binomial, and Poisson) output into
-#           table for publication.
-# Note: Always evaluate output from summary of model, as well.
-#
-# Arguments:
-#   model - the GEE model output
-#   decimal - the number of decimal places to be used in output
-################################################################################
+#' GENERALIZED ESTIMATING EQUATION MODELS
+#'
+#' `calculate_gee_output` organizes GEE model (Gaussian, Binomial, and Poisson)
+#' output into table for publication. Note: Always evaluate output from summary
+#' of model, as well.
+#'
+#' @param model the GEE model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 calculate_gee_output = function(model, decimal = 2){
 
@@ -272,17 +254,15 @@ calculate_gee_output = function(model, decimal = 2){
   return(gee_results)
 }
 
-################################################################################
-# GLM (BINOMIAL) output for forest plot
-#
-# Name: glm_output_for_forest_plot
-# Purpose: Organize GLM (BINOMIAL/LOGISTIC) output to help with a forest plot.
-# Note: Always evaluate output from summary of model, as well.
-#
-# Arguments:
-#   model - the logistic regression (GLM) model output
-#   decimal - the number of decimal places to be used in output
-################################################################################
+#' GLM (BINOMIAL) output for forest plot
+#'
+#' `glm_output_for_forest_plot` organizes GLM (BINOMIAL/LOGISTIC) output to
+#' help with a forest plot. Note: Always evaluate output from summary of model,
+#' as well.
+#'
+#' @param model the logistic regression (GLM) model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
 
 glm_output_for_forest_plot = function(model, decimal = 2){
 
