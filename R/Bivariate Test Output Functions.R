@@ -72,6 +72,33 @@ chisq_result_from_flag = function(group, variable, decimal = 0, p_only = FALSE, 
   return(result)
 }
 
+#' T Test
+#'
+#' `ttest_result` organizes output from t test for
+#' publication.
+#'
+#' @param group the grouping variable
+#' @param variable the other variable (numeric for ANOVA)
+#' @param decimal the number of decimal places to be used in output
+#' @param p_only when FALSE (default), return statistic and p-value; when TRUE
+#' return only the p-value
+#' @export
+
+ttest_result = function(group, variable, decimal = 0, p_only = FALSE){
+  test = t.test(variable~group, data = data)
+  statistic = format(round(test$statistic, digits = decimal), nsmall = decimal)
+
+  pvalue = ifelse(test$p.value<0.001, "<0.001", format(round(test$p.value, 3), nsmall=3))
+
+  if(!p_only){
+    result = paste0(statistic, " (", pvalue, ")")
+  } else {
+    result = pvalue
+  }
+
+  return(result)
+}
+
 #' ANOVA Test
 #'
 #' `anova_result` organizes output from ANOVA test (for 3+ groups) for
