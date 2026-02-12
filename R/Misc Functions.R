@@ -8,6 +8,18 @@ get_filepath_start = function(){
   starter = paste0("C:/Users/", Sys.info()["user"], "/")
 }
 
+#' Update mmFunctions
+#'
+#' `update_mmFunctions` is for installing the latest version of mmFunctions
+#' from github.
+#' @export
+
+update_mmFunctions = function(){
+  detach("package:mmFunctions", unload = TRUE)
+  devtools::install_github("melissameekerphd/mmFunctions")
+}
+
+
 #' Summarize Data Frame
 #'
 #' `summarize_data_frame` summarizes a dataframe by returning a dataframe where
