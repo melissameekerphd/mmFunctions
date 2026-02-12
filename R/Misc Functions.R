@@ -8,6 +8,36 @@ get_filepath_start = function(){
   starter = paste0("C:/Users/", Sys.info()["user"], "/")
 }
 
+#' Summarize Data Frame
+#'
+#' `summarize_data_frame` summarizes a dataframe by returning a dataframe where
+#' each row represents a column in 'data' and includes a column for the
+#' variable names, the data class, the values, and the number of missing values.
+#'
+#' @param data the dataframe to summarize
+#' @export
+
+summarize_data_frame = function(data){
+
+  data <- data %>%
+    mutate(across(where(is.numeric), ~ if (all(.x == floor(.x), na.rm = TRUE)) as.integer(.x) else .x))
+
+  columns = as.data.frame(colnames(data))
+  columns$class = sapply(data, class)
+
+  columns$values = NA
+  for(c in 1:nrow(columns)){
+    if(length(unique(data[,c]))<20){
+      columns[c,]$values = paste(sort(unique(data[,c])), collapse="; ")
+    }
+  }
+
+  columns$n_missing = sapply(data, function(x) sum(is.na(x)))
+
+  return(columns)
+
+}
+
 #' Sample Size Adjusted for Site-Level Correlation
 #'
 #' `ss_site_cor_adj` is for calculating sample size adjusted for site-level
