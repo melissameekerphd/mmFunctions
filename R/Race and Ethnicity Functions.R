@@ -13,7 +13,7 @@ clean_binary_ethnicity = function(x){
   binary_ethnicity = x["ETHNIC_GROUP_DSC"]
   cleaned = NA
 
-  if(binary_ethnicity %in% c("Not Hispanic", "No Non Hispanic", "Portugese", "Madagascar")){
+  if(binary_ethnicity %in% c("Not Hispanic", "No Non Hispanic", "Portugese", "Madagascar", "African", "Not Hispanic or Latino", "Asian")){
     cleaned = "Non-Hispanic"
   } else if(binary_ethnicity %in% c("Hispanic", "Yes Hispanic")){
     cleaned = "Hispanic"
@@ -112,7 +112,7 @@ clean_race_variable = function(x, version){
 #' returns 'More Than 1 Race'.
 #' @export
 
-categorize_race = function(race_list, version = "v1", delimeter = ','){
+categorize_race = function(race_list, version = "v1", delimeter = ',', mtab = NULL){
 
   if(version != "v1" & version != "v2"){
     cat(red(bold("The argument \"version\" must be equal to \"v1\" or \"v2\".")))
@@ -121,7 +121,13 @@ categorize_race = function(race_list, version = "v1", delimeter = ','){
     race_list = ifelse(race_list=='NULL', NA, race_list)
 
     #MAKING BINARY VARIABLES OUT OF RACE VARIABLES
-    race_vars = mtabulate(strsplit(race_list, delimeter))
+
+    if(is.null(mtab)){
+      race_vars = mtabulate(strsplit(race_list, delimeter))
+    } else {
+      race_vars = mtab
+    }
+
     colnames(race_vars) = paste0("race_", tolower(str_replace_all(colnames(race_vars), " ", "_")))
 
     race_vars = as.data.frame(apply(race_vars, 2, function(x) ifelse(x>=1,1,0)))
@@ -222,12 +228,18 @@ clean_list = function(x, race_vars, race_label){
 #' 'race_list'
 #' @export
 
-create_race_list = function(race_list, delimeter = ','){
+create_race_list = function(race_list, delimeter = ',', mtab = NULL){
   #UPDATING MISSING VALUES FROM EPIC PULL
   race_list = ifelse(race_list=='NULL', NA, race_list)
 
   #MAKING BINARY VARIABLES OUT OF RACE VARIABLES
-  race_vars = mtabulate(strsplit(race_list, delimeter))
+
+  if(is.null(mtab)){
+    race_vars = mtabulate(strsplit(race_list, delimeter))
+  } else {
+    race_vars = mtab
+  }
+
   colnames(race_vars) = paste0("race_", tolower(str_replace_all(colnames(race_vars), " ", "_")))
 
   race_vars = as.data.frame(apply(race_vars, 2, function(x) ifelse(x>=1,1,0)))
@@ -266,7 +278,7 @@ create_race_list = function(race_list, delimeter = ','){
   data$race_other = ifelse(data$race_other, 1, 0)
   data$race_unknown = ifelse(data$race_unknown, 1, 0)
 
-  race_vars = c("race_american_indian_or_alaska_native",
+  race_var_names = c("race_american_indian_or_alaska_native",
                 "race_asian",
                 "race_black_or_african_american",
                 "race_native_hawaiian_or_other_pacific_islander",
@@ -282,9 +294,9 @@ create_race_list = function(race_list, delimeter = ','){
                  "Other",
                  "Unknown")
 
-  data$race_list_clean = apply(data[,c(race_vars)], 1, function(x) clean_list(x, race_vars, race_label))
+  data$race_list_clean = apply(data[,c(race_var_names)], 1, function(x) clean_list(x, race_var_names, race_label))
 
-  return(data$race_list_clean)
+  return(data[,c(race_var_names, "race_list_clean")])
 
 }
 
