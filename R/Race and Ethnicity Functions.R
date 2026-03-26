@@ -10,7 +10,12 @@
 #' @export
 
 clean_binary_ethnicity = function(x){
-  binary_ethnicity = x["ETHNIC_GROUP_DSC"]
+  if(length(x)==1){
+    binary_ethnicity = x
+  } else {
+    binary_ethnicity = x["ETHNIC_GROUP_DSC"]
+  }
+
   cleaned = NA
 
   if(binary_ethnicity %in% c("Not Hispanic", "No Non Hispanic", "Portugese", "Madagascar", "African", "Not Hispanic or Latino", "Asian")){
