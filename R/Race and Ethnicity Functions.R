@@ -10,22 +10,22 @@
 #' @export
 
 clean_binary_ethnicity = function(x){
-  if(length(x)==1){
-    binary_ethnicity = x
-  } else {
-    binary_ethnicity = x["ETHNIC_GROUP_DSC"]
-  }
 
-  cleaned = NA
+  cleaned = rep(NA, times = length(x))
 
-  if(binary_ethnicity %in% c("Not Hispanic", "No Non Hispanic", "Portugese", "Madagascar", "African", "Not Hispanic or Latino", "Asian")){
-    cleaned = "Non-Hispanic"
-  } else if(binary_ethnicity %in% c("Hispanic", "Yes Hispanic")){
-    cleaned = "Hispanic"
-  } else if(binary_ethnicity %in% c("Prefer not to say/Decline", "Declined")){
-    cleaned = "Declined"
-  } else if(binary_ethnicity %in% c("Unavailable", "Patient doesn't know", "NULL")){
-    cleaned = "Unavailable"
+  for(i in 1:length(x)){
+
+    binary_ethnicity = x[i]
+    if(binary_ethnicity %in% c("Not Hispanic", "No Non Hispanic", "Portugese", "Madagascar", "African", "Not Hispanic or Latino", "Asian")){
+      cleaned[i] = "Non-Hispanic"
+    } else if(binary_ethnicity %in% c("Hispanic", "Yes Hispanic")){
+      cleaned[i] = "Hispanic"
+    } else if(binary_ethnicity %in% c("Prefer not to say/Decline", "Declined")){
+      cleaned[i] = "Declined"
+    } else if(binary_ethnicity %in% c("Unavailable", "Patient doesn't know", "NULL")){
+      cleaned[i] = "Unavailable"
+    }
+
   }
 
   return(cleaned)
