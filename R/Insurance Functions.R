@@ -24,7 +24,8 @@ categorize_insurance = function(insurance_list){
   print("Hi3")
   insurance_categorization = rep(NA, times = nrow(data))
   for(i in 1:length(insurance_categorization)){
-    insurance_categorization[i] = dictionary[which(dictionary$insurance==data[i,]$insurance_list),]$categorization
+    if(i<10)(print(data[i,"insurance_list"]))
+    insurance_categorization[i] = dictionary[which(dictionary$insurance==data[i,"insurance_list"]),]$categorization
   }
   #insurance_categorization = apply(data, 1, function(x) dictionary[which(dictionary$insurance==x["insurance_list"]),]$categorization)
   print("Hi4")
