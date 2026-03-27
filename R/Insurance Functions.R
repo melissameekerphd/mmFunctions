@@ -15,13 +15,18 @@ categorize_insurance = function(insurance_list){
 
   data = as.data.frame(insurance_list)
   print("Hi1")
+  print(head(data))
   dictionary = insurance_codebook
   print("Hi2")
+  print(head(dictionary))
   dictionary$categorization = as.character(dictionary$categorization)
   print("Hi3")
   insurance_categorization = apply(data, 1, function(x) dictionary[which(dictionary$insurance==x["insurance_list"]),]$categorization)
+  print("Hi4")
+  print(insurance_categorization[1:10])
   insurance_categorization = factor(insurance_categorization, levels = c("1", "2", "3", "7", "4", "5", "6", "8"), labels = c("Commercial", "Medicare", "Medicaid", "MassHealth Limited", "Auto", "Workers' Comp", "Other", "Missing"))
-
+  print("Hi5")
+  print(insurance_categorization[1:10])
   return(insurance_categorization)
 
 }
