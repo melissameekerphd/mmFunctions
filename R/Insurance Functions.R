@@ -17,6 +17,7 @@ categorize_insurance = function(insurance_list){
   print("Hi1")
   print(head(data))
   dictionary = insurance_codebook
+  dictionary = as.data.frame(dictionary)
   print("Hi2")
   print(head(dictionary))
   dictionary$categorization = as.character(dictionary$categorization)
