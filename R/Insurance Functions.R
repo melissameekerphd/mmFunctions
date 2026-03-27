@@ -22,7 +22,11 @@ categorize_insurance = function(insurance_list){
   print(head(dictionary))
   dictionary$categorization = as.character(dictionary$categorization)
   print("Hi3")
-  insurance_categorization = apply(data, 1, function(x) dictionary[which(dictionary$insurance==x["insurance_list"]),]$categorization)
+  insurance_categorization = rep(NA, times = nrow(data))
+  for(i in 1:length(insurance_categorization)){
+    insurance_categorization[i] = dictionary[which(dictionary$insurance==data[i,]$insurance_list),]$categorization
+  }
+  #insurance_categorization = apply(data, 1, function(x) dictionary[which(dictionary$insurance==x["insurance_list"]),]$categorization)
   print("Hi4")
   print(insurance_categorization[1:10])
   insurance_categorization = factor(insurance_categorization, levels = c("1", "2", "3", "7", "4", "5", "6", "8"), labels = c("Commercial", "Medicare", "Medicaid", "MassHealth Limited", "Auto", "Workers' Comp", "Other", "Missing"))
