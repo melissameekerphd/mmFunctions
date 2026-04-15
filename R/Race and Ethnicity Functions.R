@@ -64,7 +64,7 @@ clean_race_variable = function(x, version){
   if(version == "v1"){
     if(is.na(x["race_list"])){
       cleaned = "Unknown"
-    } else if(race_n==0 & (x["race_other"]==TRUE|x["race_hispanic"]==TRUE)){
+    } else if(race_n==0 & x["race_other"]==TRUE){
       cleaned = "Other"
     } else if(race_n==0 & (x["race_unknown"]==TRUE)){
       cleaned = "Unknown"
@@ -79,7 +79,7 @@ clean_race_variable = function(x, version){
   if(version == "v2"){
     if(is.na(x["race_list"])){
       cleaned = "Unknown"
-    } else if(race_n==0 & (x["race_other"]==TRUE|x["race_hispanic"]==TRUE)){
+    } else if(race_n==0 & x["race_other"]==TRUE){
       cleaned = "Other"
     } else if(race_n==0 & x["race_unknown"]==TRUE){
       cleaned = "Unknown"
@@ -165,17 +165,16 @@ categorize_race = function(race_list, version = "v1", delimeter = ',', mtab = NU
                              race_asian+
                              race_native_hawaiian_or_other_pacific_islander+
                              race_american_indian_or_alaska_native,
-                           race_hispanic = race_hispanic_or_latino==1,
                            race_other = race_other==1|
-                             race_race_not_listed==1|
-                             race_unavailable==1,
+                             race_race_not_listed==1,
                            race_unknown = is.na(race_list)|
                              `race_patient_doesn't_know`==1|
-                             race_declined==1)
+                             race_unavailable==1|
+                             race_hispanic_or_latino==1,
+                           race_declined = race_declined==1)
 
     data$race_clean = apply(data[,c("race_list",
                                     "race_n",
-                                    "race_hispanic",
                                     "race_other",
                                     "race_unknown",
                                     "race_white",
@@ -273,15 +272,16 @@ create_race_list = function(race_list, delimeter = ',', mtab = NULL){
   remove(race_vars)
 
   data = data %>% mutate(race_other = race_other==1|
-                           race_race_not_listed==1|
-                           race_unavailable==1,
+                           race_race_not_listed==1,
                          race_unknown = is.na(race_list)|
                            `race_patient_doesn't_know`==1|
-                           race_hispanic_or_latino==1|
-                           race_declined==1)
+                           race_unavailable==1|
+                           race_hispanic_or_latino==1,
+                         race_declined = race_declined==1)
 
   data$race_other = ifelse(data$race_other, 1, 0)
   data$race_unknown = ifelse(data$race_unknown, 1, 0)
+  data$race_declined = ifelse(data$race_declined, 1, 0)
 
   race_var_names = c("race_american_indian_or_alaska_native",
                 "race_asian",
@@ -289,7 +289,8 @@ create_race_list = function(race_list, delimeter = ',', mtab = NULL){
                 "race_native_hawaiian_or_other_pacific_islander",
                 "race_white",
                 "race_other",
-                "race_unknown")
+                "race_unknown",
+                "race_declined")
 
   race_label = c("American Indian or Alaska Native",
                  "Asian",
@@ -297,7 +298,8 @@ create_race_list = function(race_list, delimeter = ',', mtab = NULL){
                  "Native Hawaiian or Other Pacific Islander",
                  "White",
                  "Other",
-                 "Unknown")
+                 "Unknown",
+                 "Declined")
 
   data$race_list_clean = apply(data[,c(race_var_names)], 1, function(x) clean_list(x, race_var_names, race_label))
 
