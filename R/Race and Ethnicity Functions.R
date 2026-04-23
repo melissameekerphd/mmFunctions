@@ -180,6 +180,7 @@ categorize_race = function(race_list, version = "v1", delimeter = ',', mtab = NU
     data$race_clean = apply(data[,c("race_list",
                                     "race_n",
                                     "race_other",
+                                    "race_declined",
                                     "race_unknown",
                                     "race_white",
                                     "race_black_or_african_american",
