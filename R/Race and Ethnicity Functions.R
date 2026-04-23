@@ -66,6 +66,8 @@ clean_race_variable = function(x, version){
       cleaned = "Unknown"
     } else if(race_n==0 & x["race_other"]==TRUE){
       cleaned = "Other"
+    } else if(race_n==0 & x["race_declined"]==TRUE){
+      cleaned = "Declined"
     } else if(race_n==0 & (x["race_unknown"]==TRUE)){
       cleaned = "Unknown"
     } else if(race_n==1){
@@ -81,6 +83,8 @@ clean_race_variable = function(x, version){
       cleaned = "Unknown"
     } else if(race_n==0 & x["race_other"]==TRUE){
       cleaned = "Other"
+    } else if(race_n==0 & x["race_declined"]==TRUE){
+      cleaned = "Declined"
     } else if(race_n==0 & x["race_unknown"]==TRUE){
       cleaned = "Unknown"
     } else if(race_n==1 & as.logical(x["race_other"])==FALSE){
@@ -190,6 +194,7 @@ categorize_race = function(race_list, version = "v1", delimeter = ',', mtab = NU
                                                           "Native Hawaiian or Other Pacific Islander",
                                                           "More Than 1 Race",
                                                           "Other",
+                                                          "Declined",
                                                           "Unknown"))
 
     return(data$race_factor)
