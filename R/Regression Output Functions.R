@@ -78,7 +78,9 @@ calculate_glm_output = function(glm_model){
 
 
     glm_results = glm_results[,c("rate_ratio", "conf_int", "pvalue")]
+
   } else if(summary$family$family=="poisson"| str_detect(summary$family$family, "Negative Binomial")){
+
     glm_results$pvalue = ifelse(glm_results$`Pr(>|z|)`<0.001, "<0.001", round(glm_results$`Pr(>|z|)`, 3))
 
     glm_results$lower = glm_results$Estimate-1.96*glm_results$`Std. Error`
