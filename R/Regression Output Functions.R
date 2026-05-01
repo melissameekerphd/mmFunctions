@@ -233,14 +233,14 @@ calculate_gee_output = function(model, decimal = 2){
   } else if(summary$model$varfun=="Binomial"){
 
     #Exponentiate for odds
-    gee_results$odds_ratio = exp(gee_results$Estimate)
+    gee_results$ratio = exp(gee_results$Estimate)
     gee_results$odds_lower = exp(gee_results$lower)
     gee_results$odds_upper = exp(gee_results$upper)
 
     gee_results$conf_int = paste0("[", format(round(gee_results$odds_lower,decimal), nsmall = decimal), ", ",
                                   format(round(gee_results$odds_upper,decimal), nsmall = decimal), "]")
 
-    gee_results = gee_results[,c("odds_ratio", "conf_int", "pvalue")]
+    gee_results = gee_results[,c("ratio", "conf_int", "pvalue")]
   } else if(summary$model$varfun=="Poisson"){
 
     #Exponentiate for odds
