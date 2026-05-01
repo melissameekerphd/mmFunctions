@@ -4,7 +4,7 @@
 \alias{create_race_list}
 \title{Return List of Races Separated by Delimiter}
 \usage{
-create_race_list(race_list, delimeter = ",")
+create_race_list(race_list, delimeter = ",", mtab = NULL)
 }
 \arguments{
 \item{race_list}{the initial race list containing these potential values

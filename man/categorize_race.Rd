@@ -4,7 +4,7 @@
 \alias{categorize_race}
 \title{Return Factor of a Cleaned Race Variable}
 \usage{
-categorize_race(race_list, version = "v1", delimeter = ",")
+categorize_race(race_list, version = "v1", delimeter = ",", mtab = NULL)
 }
 \arguments{
 \item{race_list}{the initial race list containing these potential values
