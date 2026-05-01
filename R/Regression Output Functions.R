@@ -257,6 +257,44 @@ calculate_gee_output = function(model, decimal = 2){
   return(gee_results)
 }
 
+#' GENERALIZED ESTIMATING EQUATION MODELS
+#'
+#' `calculate_gee_nb_output` organizes GEE model (Negative Binomial)
+#' output into table for publication. Note: Always evaluate output from summary
+#' of model, as well. This is using the model object created by the function
+#' glmgee() from the package glmtoolbox
+#'
+#' @param model the GEE model object
+#' @param decimal the number of decimal places to be used in output
+#' @export
+
+calculate_gee_nb_output = function(model, decimal = 2){
+
+  summary = summary(model)
+
+  gee_results = as.data.frame(coef(summary))[,c("Estimate", "Std.Error", "z-value")]
+  gee_results$pvalue = 2 * (1-pnorm(abs(gee_results$`z-value`)))
+  gee_results$pvalue = ifelse(gee_results$pvalue<0.001, "<0.001", round(gee_results$pvalue, 3))
+
+  gee_results$lower = gee_results$Estimate-1.96*gee_results$`Std.Error`
+  gee_results$upper = gee_results$Estimate+1.96*gee_results$`Std.Error`
+
+  #Exponentiate for rate ratio
+  gee_results$ratio = exp(gee_results$Estimate)
+  gee_results$ratio_lower = exp(gee_results$lower)
+  gee_results$ratio_upper = exp(gee_results$upper)
+
+  gee_results$conf_int = paste0("[", format(round(gee_results$ratio_lower,decimal), nsmall = decimal), ", ",
+                                format(round(gee_results$ratio_upper,decimal), nsmall = decimal), "]")
+
+  gee_results = gee_results[,c("ratio", "conf_int", "pvalue")]
+
+  gee_results = gee_results[which(!is.na(gee_results$pvalue)),]
+
+  return(gee_results)
+}
+
+
 #' GLM (BINOMIAL) output for forest plot
 #'
 #' `glm_output_for_forest_plot` organizes GLM (BINOMIAL/LOGISTIC) output to
