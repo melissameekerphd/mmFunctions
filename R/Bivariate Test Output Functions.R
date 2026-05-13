@@ -12,9 +12,10 @@
 #' TRUE monte carlo simulation is used; this is helpful when small sample
 #' @export
 
-chisq_result = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FALSE){
+chisq_result = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FALSE, remove_empty = FALSE){
 
   table = table(variable, group)
+  original_rows_n = nrow(table)
   table = table[which(rowSums(table)!=0),]
 
   if(mcsim){
@@ -32,7 +33,12 @@ chisq_result = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FA
     result = pvalue
   }
 
-  result = c(result, rep(NA, times = length(unique(variable))-1))
+  if(remove_empty){
+    result = c(result, rep(NA, times = length(unique(variable))-1))
+  } else {
+    result = c(result, rep(NA, times = length(unique(original_rows_n))-1))
+  }
+
 
   return(result)
 }
