@@ -32,6 +32,8 @@ chisq_result = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FA
     result = pvalue
   }
 
+  result = c(result, rep(NA, times = length(unique(variable))-1))
+
   return(result)
 }
 
@@ -122,6 +124,7 @@ anova_result = function(group, variable, decimal = 0, p_only = FALSE){
   } else {
     result = pvalue
   }
+
 
   return(result)
 }
