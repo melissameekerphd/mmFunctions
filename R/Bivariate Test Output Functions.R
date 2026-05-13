@@ -32,6 +32,8 @@ chisq_result = function(group, variable, decimal = 0, p_only = FALSE, mcsim = FA
     result = pvalue
   }
 
+  result = c(result, rep(NA, times = length(unique(group))-1))
+
   return(result)
 }
 
@@ -96,6 +98,8 @@ ttest_result = function(group, variable, decimal = 0, p_only = FALSE){
     result = pvalue
   }
 
+  result = c(result, rep(NA, times = length(unique(group))-1))
+
   return(result)
 }
 
@@ -122,6 +126,8 @@ anova_result = function(group, variable, decimal = 0, p_only = FALSE){
   } else {
     result = pvalue
   }
+
+  result = c(result, rep(NA, times = length(unique(group))-1))
 
   return(result)
 }
@@ -150,6 +156,8 @@ wilcoxon_result = function(group, variable, decimal = 0, p_only = FALSE){
     result = pvalue
   }
 
+  result = c(result, rep(NA, times = length(unique(group))-1))
+
   return(result)
 }
 
@@ -176,6 +184,8 @@ kruskal_wallis_result = function(group, variable, decimal = 0, p_only = FALSE){
   } else {
     result = pvalue
   }
+
+  result = c(result, rep(NA, times = length(unique(group))-1))
 
   return(result)
 }
