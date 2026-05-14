@@ -4,7 +4,14 @@
 \alias{chisq_result}
 \title{Chi Squared Test}
 \usage{
-chisq_result(group, variable, decimal = 0, p_only = FALSE, mcsim = FALSE)
+chisq_result(
+  group,
+  variable,
+  decimal = 0,
+  p_only = FALSE,
+  mcsim = FALSE,
+  remove_empty = FALSE
+)
 }
 \arguments{
 \item{group}{the grouping variable}
